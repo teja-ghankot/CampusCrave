@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
-import 'home_page.dart';
+import 'CamCraveHome.dart';
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           case '/home':
             return PageRouteBuilder(
               settings: settings,
-              pageBuilder: (_, __, ___) => const HomePage(),
+              pageBuilder: (_, __, ___) =>  CamCraveHome(),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
                   opacity: animation,

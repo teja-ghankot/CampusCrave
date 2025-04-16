@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
 import 'curve_painter.dart';
+import 'auth_service.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -10,14 +11,23 @@ class SignupScreen extends StatefulWidget {
 }
 
 class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderStateMixin {
-  // For animation similar to the Login Screen
   late AnimationController _controller;
   late Animation<double> _fadeAnimation;
   late Animation<Offset> _slideAnimation;
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
-  String? _selectedRole;
+
+  final TextEditingController phoneController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
+
+  final Color primaryColor = const Color(0xFF6C63FF);
+  final Color secondaryColor = const Color(0xFF6A5ACD);
+  final Color accentColor = const Color(0xFFFE9A8B);
+  final Color textColor = const Color(0xFF424242);
+  final Color backgroundColor = const Color(0xFFF8F9FF);
 
   @override
   void initState() {
@@ -43,17 +53,14 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
   @override
   void dispose() {
     _controller.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
-  // Modern color palette (same as Login Screen)
-  final Color primaryColor = const Color(0xFF6C63FF);
-  final Color secondaryColor = const Color(0xFF6A5ACD);
-  final Color accentColor = const Color(0xFFFE9A8B);
-  final Color textColor = const Color(0xFF424242);
-  final Color backgroundColor = const Color(0xFFF8F9FF);
-
-  Widget _buildTextField(TextInputType type, bool obscure, Widget? suffixIcon, String hintText) {
+  Widget _buildTextField(TextEditingController controller, TextInputType type, bool obscure, Widget? suffixIcon, String hintText) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
@@ -66,6 +73,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
         ],
       ),
       child: TextField(
+        controller: controller,
         keyboardType: type,
         obscureText: obscure,
         style: TextStyle(color: textColor),
@@ -99,60 +107,11 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
     );
   }
 
-  Widget _buildRoleDropdown() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        boxShadow: [
-          BoxShadow(
-            color: primaryColor.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: DropdownButtonFormField<String>(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          hintText: "Select your role",
-          hintStyle: TextStyle(color: Colors.grey.shade400),
-          prefixIcon: Icon(Icons.person, color: primaryColor),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide.none,
-          ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide.none,
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: BorderSide(color: primaryColor, width: 1.5),
-          ),
-        ),
-        value: _selectedRole,
-        items: const [
-          DropdownMenuItem(value: "Faculty", child: Text("Faculty")),
-          DropdownMenuItem(value: "Student", child: Text("Student")),
-        ],
-        onChanged: (value) {
-          setState(() {
-            _selectedRole = value;
-          });
-        },
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          // Gradient Background
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -162,21 +121,15 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
               ),
             ),
           ),
-
-          // Decorative wave shape
           Positioned(
             left: -50,
             top: 0,
             child: Container(
               width: MediaQuery.of(context).size.width * 0.6,
               height: MediaQuery.of(context).size.height,
-              child: CustomPaint(
-                painter: CurvePainter(primaryColor),
-              ),
+              child: CustomPaint(painter: CurvePainter(primaryColor)),
             ),
           ),
-
-          // Decorative circles
           Positioned(
             right: -30,
             top: 70,
@@ -201,7 +154,6 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
               ),
             ),
           ),
-
           SafeArea(
             child: SingleChildScrollView(
               child: Center(
@@ -215,60 +167,53 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const SizedBox(height: 50),
-                          // Title with changed text color
                           Text(
                             "Create Account",
-                            style: TextStyle(
-                              fontSize: 28,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black, // Changed to black for contrast
-                              letterSpacing: 1.2,
-                            ),
+                            style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black),
                           ),
                           const SizedBox(height: 10),
-                          Text(
-                            "Sign up to get started",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black, // Changed to black for contrast
-                            ),
-                          ),
+                          Text("Sign up to get started", style: TextStyle(fontSize: 16, color: Colors.black)),
                           const SizedBox(height: 40),
-
-                          // Signup Form Fields (centered)
-                          _buildTextField(TextInputType.phone, false, null, "Enter your mobile number"),
+                          _buildTextField(phoneController, TextInputType.phone, false, null, "Enter your mobile number"),
                           const SizedBox(height: 20),
-                          _buildTextField(TextInputType.emailAddress, false, null, "Enter your email"),
+                          _buildTextField(emailController, TextInputType.emailAddress, false, null, "Enter your email"),
                           const SizedBox(height: 20),
-                          _buildTextField(TextInputType.visiblePassword, true, IconButton(
-                            icon: Icon(
-                              _obscurePassword ? Icons.visibility : Icons.visibility_off,
-                              color: primaryColor,
+                          _buildTextField(
+                            passwordController,
+                            TextInputType.visiblePassword,
+                            _obscurePassword,
+                            IconButton(
+                              icon: Icon(
+                                _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                                color: primaryColor,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _obscurePassword = !_obscurePassword;
-                              });
-                            },
-                          ), "Enter your password"),
+                            "Enter your password",
+                          ),
                           const SizedBox(height: 20),
-                          _buildTextField(TextInputType.visiblePassword, true, IconButton(
-                            icon: Icon(
-                              _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
-                              color: primaryColor,
+                          _buildTextField(
+                            confirmPasswordController,
+                            TextInputType.visiblePassword,
+                            _obscureConfirmPassword,
+                            IconButton(
+                              icon: Icon(
+                                _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                                color: primaryColor,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscureConfirmPassword = !_obscureConfirmPassword;
+                                });
+                              },
                             ),
-                            onPressed: () {
-                              setState(() {
-                                _obscureConfirmPassword = !_obscureConfirmPassword;
-                              });
-                            },
-                          ), "Reconfirm your password"),
-                          const SizedBox(height: 20),
-                          // Role as dropdown
-                          _buildRoleDropdown(),
+                            "Reconfirm your password",
+                          ),
                           const SizedBox(height: 30),
-
-                          // Sign Up Button
                           Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
@@ -284,8 +229,28 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                               width: double.infinity,
                               height: 55,
                               child: ElevatedButton(
-                                onPressed: () {
-                                  // Implement sign up functionality
+                                onPressed: () async {
+                                  if (passwordController.text != confirmPasswordController.text) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text("Passwords do not match")),
+                                    );
+                                    return;
+                                  }
+
+                                  final authService = AuthService();
+                                  final error = await authService.registerUser(
+                                    phoneController.text.trim(),
+                                    emailController.text.trim(),
+                                    passwordController.text.trim(),
+                                  );
+
+                                  if (error == null) {
+                                    Navigator.pushNamed(context, '/login');
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(error)),
+                                    );
+                                  }
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: secondaryColor,
@@ -297,36 +262,23 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                                 ),
                                 child: const Text(
                                   'SIGN UP',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    letterSpacing: 1.5,
-                                  ),
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, letterSpacing: 1.5),
                                 ),
                               ),
                             ),
                           ),
                           const SizedBox(height: 25),
-                          // Already have an account? Log in link with updated text color
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                "Already have an account?",
-                                style: TextStyle(
-                                  color: Colors.black, // Changed to black for contrast
-                                ),
-                              ),
+                              Text("Already have an account?", style: TextStyle(color: Colors.black)),
                               TextButton(
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/');
                                 },
                                 child: Text(
                                   'Log in',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                  style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
@@ -345,4 +297,3 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
     );
   }
 }
-

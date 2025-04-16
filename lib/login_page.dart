@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'curve_painter.dart'; // Import the extracted custom painter
+import 'auth_service.dart'; // Import the AuthService (assuming you have this class)
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -107,16 +108,18 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
     );
   }
 
-  // Simple login function for testing
-  void _login() {
-    if (_phoneController.text == "1111" && _passwordController.text == "1111") {
-      // Navigate to HomePage on success using named route
+  // Login function using AuthService
+  void _login() async {
+    final authService = AuthService();
+    final error = await authService.loginUser(
+      _phoneController.text,
+      _passwordController.text,
+    );
+
+    if (error == null) {
       Navigator.pushNamed(context, '/home');
     } else {
-      // Show error message
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid credentials")),
-      );
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
     }
   }
 
