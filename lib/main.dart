@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'signup_page.dart';
 import 'CamCraveHome.dart';
+import 'menu_page.dart'; // 👈 Import the menu page
 
 void main() {
   runApp(const MyApp());
@@ -27,12 +28,14 @@ class MyApp extends StatelessWidget {
         switch (settings.name) {
           case '/':
             return MaterialPageRoute(builder: (_) => const LoginScreen());
+
           case '/signup':
             return MaterialPageRoute(builder: (_) => const SignupScreen());
+
           case '/home':
             return PageRouteBuilder(
               settings: settings,
-              pageBuilder: (_, __, ___) =>  CamCraveHome(),
+              pageBuilder: (_, __, ___) => CamCraveHome(),
               transitionsBuilder: (context, animation, secondaryAnimation, child) {
                 return FadeTransition(
                   opacity: animation,
@@ -41,6 +44,10 @@ class MyApp extends StatelessWidget {
               },
               transitionDuration: const Duration(milliseconds: 500),
             );
+
+          case '/menu': // ✅ Added Menu route
+            return MaterialPageRoute(builder: (_) => const MenuPage1());
+
           default:
             return MaterialPageRoute(builder: (_) => const LoginScreen());
         }
