@@ -1,0 +1,189 @@
+{
+
+  "rupeeSymbol": "₹",
+
+"@@locale": "en",
+  "@@last_modified": "2025-05-29T00:00:00.000Z",
+
+  "updateMenu": "Update Menu",
+  "@updateMenu": {
+    "description": "Title for the menu update page"
+  },
+
+  "canteenAccount": "Canteen Account",
+  "@canteenAccount": {
+    "description": "Label for canteen account"
+  },
+
+  "logout": "Logout",
+  "@logout": {
+    "description": "Logout button text"
+  },
+
+  "logoutConfirmation": "Are you sure you want to logout?",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation dialog message"
+  },
+
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "loggedOutSuccessfully": "Logged out successfully",
+  "@loggedOutSuccessfully": {
+    "description": "Success message after logout"
+  },
+
+  "campusCanteen": "Campus Canteen",
+  "@campusCanteen": {
+    "description": "Name of the canteen"
+  },
+
+  "menuItems": "Menu Items",
+  "@menuItems": {
+    "description": "Section title for menu items"
+  },
+
+  "menuItemsCount": "Menu Items ({count} items)",
+  "@menuItemsCount": {
+    "description": "Menu items count display",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+
+  "addToMenu": "Add to Menu",
+  "@addToMenu": {
+    "description": "Button text to add items to menu"
+  },
+
+  "addToMenuWithCount": "Add to Menu • {count} items",
+  "@addToMenuWithCount": {
+    "description": "Button text with selected items count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "noItemsSelected": "No items selected",
+  "@noItemsSelected": {
+    "description": "Error message when no items are selected"
+  },
+
+  "menuUpdated": "Menu updated",
+  "@menuUpdated": {
+    "description": "Success message when menu is updated"
+  },
+
+  "failedToUpdateMenu": "Failed to update menu",
+  "@failedToUpdateMenu": {
+    "description": "Error message when menu update fails"
+  },
+
+  "menu": "Menu",
+  "@menu": {
+    "description": "Bottom navigation menu tab"
+  },
+
+  "orders": "Orders",
+  "@orders": {
+    "description": "Bottom navigation orders tab"
+  },
+
+  "profile": "Profile",
+  "@profile": {
+    "description": "Bottom navigation profile tab"
+  },
+
+  "previousOrders": "Previous Orders",
+  "@previousOrders": {
+    "description": "Previous orders menu item"
+  },
+
+  "previousOrdersComingSoon": "Previous Orders feature coming soon",
+  "@previousOrdersComingSoon": {
+    "description": "Message for upcoming feature"
+  },
+
+  "loading": "Loading...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "errorFetchingMenu": "Error fetching menu",
+  "@errorFetchingMenu": {
+    "description": "Error message when menu fetch fails"
+  },
+
+  "failedToLoadMenu": "Failed to load menu",
+  "@failedToLoadMenu": {
+    "description": "Exception message for menu loading failure"
+  },
+
+  "connectedToSocket": "Connected to socket server",
+  "@connectedToSocket": {
+    "description": "Socket connection success message"
+  },
+
+  "disconnectedFromSocket": "Disconnected from socket server",
+  "@disconnectedFromSocket": {
+    "description": "Socket disconnection message"
+  },
+
+  "notifications": "Notifications",
+  "@notifications": {
+    "description": "Notifications icon accessibility label"
+  },
+
+  "rating": "4.1",
+  "@rating": {
+    "description": "Canteen rating display"
+  },
+  "orders": "Orders",
+  "menu": "Menu",
+  "profile": "Profile",
+  "preparing": "Preparing",
+  "ready": "Ready",
+  "pickup": "Pickup",
+  "noOrders": "NO ORDERS!",
+  "logout": "Logout",
+  "logoutConfirmation": "Are you sure you want to logout?",
+  "cancel": "Cancel",
+  "loggedOutSuccessfully": "Logged out successfully",
+  "markReady": "Mark Ready",
+  "markPickedUp": "Mark Picked Up",
+  "itemsOrdered": "Items Ordered",
+  "totalAmount": "Total Amount",
+  "canteenAccount": "Canteen Account",
+  "previousOrders": "Previous Orders",
+  "orderNumber": "Order #",
+  "ordersWithStatusWillAppearHere": "Orders with status \"{status}\" will appear here.",
+  "@ordersWithStatusWillAppearHere": {
+    "placeholders": {
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "previousOrdersFeatureComingSoon": "Previous Orders feature coming soon",
+  "notifications": "Notifications",
+  "customer": "Customer",
+  "status": "Status",
+  "failedToLoadOrders": "Failed to load orders",
+  "failedToUpdateOrderStatus": "Failed to update order status",
+  "errorFetchingOrders": "Error fetching orders",
+  "errorUpdatingOrderStatus": "Error updating order status",
+
+  "noOrdersDescription": "You have no orders at the moment.",
+  "logoutSuccess": "Logout successful!",
+  "@logoutSuccess": {
+    "description": "Shown in a snackbar after user logs out successfully"
+  }
+}

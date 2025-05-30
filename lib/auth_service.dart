@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AuthService {
-  final _baseUrl = 'http://10.0.2.2:3000'; // For Android emulator. Use localhost for iOS/web.
+  final _baseUrl = 'https://campcrave-backend.onrender.com'; // For Android emulator. Use localhost for iOS/web.
   final _storage = const FlutterSecureStorage();
 
   Future<String?> registerUser(String phone, String email, String password) async {
@@ -24,7 +24,6 @@ class AuthService {
       return jsonDecode(response.body)['message'];
     }
   }
-
   Future<String?> loginUser(String mobileNumber, String password) async {
     final response = await http.post(
       Uri.parse('$_baseUrl/login'),
@@ -36,12 +35,18 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      return null; // Successful login
+      final data = jsonDecode(response.body);
+      await _storage.write(key: 'token', value: data['token']);
+      await _storage.write(key: 'userId', value: data['userId']);
+      await _storage.write(key:'phonenumber',value: data['phonenumber']);
+      await _storage.write(key: 'role', value: data['role']); // Saving the role
+      return data['role']; // Return 'student' or 'canteen'
     } else {
-      final responseBody = jsonDecode(response.body);
-      return responseBody['message']; // Return the error message from the server
+      // final responseBody = jsonDecode(response.body);
+      return null;
     }
   }
+
 
 
   Future<String?> getToken() async {

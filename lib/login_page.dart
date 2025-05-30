@@ -110,18 +110,60 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
 
   // Login function using AuthService
   void _login() async {
-    final authService = AuthService();
-    final error = await authService.loginUser(
-      _phoneController.text,
-      _passwordController.text,
+    // Add loading state
+    if (!mounted) return;
+
+    // Optional: Show loading indicator
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
 
-    if (error == null) {
-      Navigator.pushNamed(context, '/home');
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+    try {
+      final authService = AuthService();
+      final role = await authService.loginUser(
+        _phoneController.text,
+        _passwordController.text,
+      );
+
+      // Check if widget is still mounted after async operation
+      if (!mounted) return;
+
+      // Hide loading dialog
+      Navigator.of(context).pop();
+
+      if (role == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Invalid credentials'))
+        );
+      } else {
+        // Role-based redirection
+        if (role == 'student') {
+          Navigator.pushReplacementNamed(context, '/home');
+        } else if (role == 'canteen') {
+          Navigator.pushReplacementNamed(context, '/menu');
+        }
+      }
+    } catch (error) {
+      // Check mounted before using context in catch block
+      if (!mounted) return;
+
+      // Hide loading dialog if it's showing
+      if (Navigator.canPop(context)) {
+        Navigator.of(context).pop();
+      }
+
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Login error: $error'))
+      );
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -280,6 +322,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                   color: primaryColor,
                                 ),
                                 onPressed: () {
+
                                   setState(() {
                                     _obscurePassword = !_obscurePassword;
                                   });
@@ -288,19 +331,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                               "Enter your password",
                               controller: _passwordController,
                             ),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: TextButton(
-                                onPressed: () {},
-                                child: Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                    color: primaryColor,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
+
                             const SizedBox(height: 30),
                             // Login Button with _login() functionality
                             Container(

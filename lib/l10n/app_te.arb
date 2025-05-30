@@ -1,0 +1,185 @@
+{
+
+  "rupeeSymbol": "₹",
+
+"@@locale": "te",
+  "@@last_modified": "2025-05-29T00:00:00.000Z",
+
+  "updateMenu": "మెనూను నవీకరించు",
+  "@updateMenu": {
+    "description": "Title for the menu update page"
+  },
+
+  "canteenAccount": "క్యాంటీన్ ఖాతా",
+  "@canteenAccount": {
+    "description": "Label for canteen account"
+  },
+
+  "logout": "లాగ్ అవుట్",
+  "@logout": {
+    "description": "Logout button text"
+  },
+
+  "logoutConfirmation": "మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?",
+  "@logoutConfirmation": {
+    "description": "Logout confirmation dialog message"
+  },
+
+  "cancel": "రద్దు చేయి",
+  "@cancel": {
+    "description": "Cancel button text"
+  },
+
+  "loggedOutSuccessfully": "విజయవంతంగా లాగ్ అవుట్ అయ్యారు",
+  "@loggedOutSuccessfully": {
+    "description": "Success message after logout"
+  },
+
+  "campusCanteen": "క్యాంపస్ క్యాంటీన్",
+  "@campusCanteen": {
+    "description": "Name of the canteen"
+  },
+
+  "menuItems": "మెనూ వస్తువులు",
+  "@menuItems": {
+    "description": "Section title for menu items"
+  },
+
+  "menuItemsCount": "మెనూ వస్తువులు ({count} వస్తువులు)",
+  "@menuItemsCount": {
+    "description": "Menu items count display",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "5"
+      }
+    }
+  },
+
+  "addToMenu": "మెనూకు జోడించు",
+  "@addToMenu": {
+    "description": "Button text to add items to menu"
+  },
+
+  "addToMenuWithCount": "మెనూకు జోడించు • {count} వస్తువులు",
+  "@addToMenuWithCount": {
+    "description": "Button text with selected items count",
+    "placeholders": {
+      "count": {
+        "type": "int",
+        "example": "3"
+      }
+    }
+  },
+
+  "noItemsSelected": "ఎటువంటి వస్తువులు ఎంచుకోలేదు",
+  "@noItemsSelected": {
+    "description": "Error message when no items are selected"
+  },
+
+  "menuUpdated": "మెనూ నవీకరించబడింది",
+  "@menuUpdated": {
+    "description": "Success message when menu is updated"
+  },
+
+  "failedToUpdateMenu": "మెనూ నవీకరించడంలో విఫలమైంది",
+  "@failedToUpdateMenu": {
+    "description": "Error message when menu update fails"
+  },
+
+  "menu": "మెనూ",
+  "@menu": {
+    "description": "Bottom navigation menu tab"
+  },
+
+  "orders": "ఆర్డర్లు",
+  "@orders": {
+    "description": "Bottom navigation orders tab"
+  },
+
+  "profile": "ప్రొఫైల్",
+  "@profile": {
+    "description": "Bottom navigation profile tab"
+  },
+
+  "previousOrders": "మునుపటి ఆర్డర్లు",
+  "@previousOrders": {
+    "description": "Previous orders menu item"
+  },
+
+  "previousOrdersComingSoon": "మునుపటి ఆర్డర్లు ఫీచర్ త్వరలో వస్తుంది",
+  "@previousOrdersComingSoon": {
+    "description": "Message for upcoming feature"
+  },
+
+  "loading": "లోడ్ అవుతోంది...",
+  "@loading": {
+    "description": "Loading indicator text"
+  },
+
+  "errorFetchingMenu": "మెనూ తీసుకురావడంలో లోపం",
+  "@errorFetchingMenu": {
+    "description": "Error message when menu fetch fails"
+  },
+
+  "failedToLoadMenu": "మెనూ లోడ్ చేయడంలో విఫలమైంది",
+  "@failedToLoadMenu": {
+    "description": "Exception message for menu loading failure"
+  },
+
+  "connectedToSocket": "సాకెట్ సర్వర్‌కు కనెక్ట్ అయ్యారు",
+  "@connectedToSocket": {
+    "description": "Socket connection success message"
+  },
+
+  "disconnectedFromSocket": "సాకెట్ సర్వర్ నుండి డిస్‌కనెక్ట్ అయ్యారు",
+  "@disconnectedFromSocket": {
+    "description": "Socket disconnection message"
+  },
+
+  "notifications": "నోటిఫికేషన్లు",
+  "@notifications": {
+    "description": "Notifications icon accessibility label"
+  },
+
+  "rating": "4.1",
+  "@rating": {
+    "description": "Canteen rating display"
+  },
+  "orders": "ఆర్డర్లు",
+  "menu": "మెనూ",
+  "profile": "ప్రొఫైల్",
+  "preparing": "తయారుచేస్తున్నాం",
+  "ready": "సిద్ధంగా ఉంది",
+  "pickup": "తీసుకెళ్లండి",
+  "noOrders": "ఆర్డర్లు లేవు!",
+  "logout": "లాగ్ అవుట్",
+  "logoutConfirmation": "మీరు ఖచ్చితంగా లాగ్ అవుట్ చేయాలనుకుంటున్నారా?",
+  "cancel": "రద్దు చేయండి",
+  "loggedOutSuccessfully": "విజయవంతంగా లాగ్ అవుట్ అయ్యారు",
+  "markReady": "సిద్ధంగా మార్చండి",
+  "markPickedUp": "తీసుకెళ్లినట్లు మార్చండి",
+  "itemsOrdered": "ఆర్డర్ చేసిన వస్తువులు",
+  "totalAmount": "మొత్తం మొత్తం",
+  "canteenAccount": "క్యాంటీన్ ఖాతా",
+  "previousOrders": "మునుపటి ఆర్డర్లు",
+  "orderNumber": "ఆర్డర్ #",
+  "ordersWithStatusWillAppearHere": "\"{status}\" స్థితితో ఆర్డర్లు ఇక్కడ కనిపిస్తాయి.",
+  "previousOrdersFeatureComingSoon": "మునుపటి ఆర్డర్లు ఫీచర్ త్వరలో వస్తుంది",
+  "notifications": "నోటిఫికేషన్లు",
+  "customer": "కస్టమర్",
+  "status": "స్థితి",
+  "failedToLoadOrders": "ఆర్డర్లు లోడ్ చేయడంలో విఫలమైంది",
+  "failedToUpdateOrderStatus": "ఆర్డర్ స్థితిని అప్డేట్ చేయడంలో విఫలమైంది",
+  "errorFetchingOrders": "ఆర్డర్లు తీసుకురావడంలో లోపం",
+  "errorUpdatingOrderStatus": "ఆర్డర్ స్థితిని అప్డేట్ చేయడంలో లోపం",
+
+  "noOrdersDescription": "ప్రస్తుతం మీకు ఆర్డర్లు లేవు.",
+
+  "logoutSuccess": "లాగ్‌అవుట్ విజయవంతం!",
+  "@logoutSuccess": {
+    "description": "లాగౌట్ అయిన తర్వాత చూపే సందేశం"
+  }
+
+
+}
