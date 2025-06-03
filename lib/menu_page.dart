@@ -109,7 +109,7 @@ class _MenuPageState extends State<MenuPage1> {
             children: [
               Icon(
                 Icons.language,
-                color: const Color(0xFFFF9800),
+                color: const Color(0xFF1B73A9),
                 size: 24,
               ),
               const SizedBox(width: 8),
@@ -169,7 +169,7 @@ class _MenuPageState extends State<MenuPage1> {
           children: [
             Icon(
               icon,
-              color: const Color(0xFFFF9800),
+              color: const Color(0xFF0DB6EA),
               size: 20,
             ),
             const SizedBox(width: 12),
@@ -270,7 +270,7 @@ class _MenuPageState extends State<MenuPage1> {
                       ),
                       child: const Icon(
                         Icons.person,
-                        color: Color(0xFFFF9800),
+                        color: Color(0xFF0DB6EA),
                         size: 30,
                       ),
                     ),
@@ -526,19 +526,19 @@ class _MenuPageState extends State<MenuPage1> {
             ),
             child: Row(
               children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFFFFF3E0),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.restaurant,
-                    color: Color(0xFFFF9800),
-                    size: 24,
-                  ),
-                ),
+                // Container(
+                //   width: 50,
+                //   height: 50,
+                //   decoration: BoxDecoration(
+                //     color: const Color(0xFFFFF3E0),
+                //     borderRadius: BorderRadius.circular(12),
+                //   ),
+                //   // child: const Icon(
+                //   //   Icons.restaurant,
+                //   //   color: Color(0xFFFF9800),
+                //   //   size: 24,
+                //   // ),
+                // ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Column(
@@ -552,14 +552,14 @@ class _MenuPageState extends State<MenuPage1> {
                           color: Colors.black87,
                         ),
                       ),
-                      const SizedBox(height: 2),
-                      Text(
-                        localizations.campusCanteen,
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
-                        ),
-                      ),
+                      // const SizedBox(height: 2),
+                      // Text(
+                      //   localizations.campusCanteen,
+                      //   style: const TextStyle(
+                      //     fontSize: 14,
+                      //     color: Colors.grey,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -610,7 +610,8 @@ class _MenuPageState extends State<MenuPage1> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.shopping_bag_outlined, color: Color(0xFFFF9800), size: 20),
+                      const Icon(Icons.shopping_bag_outlined, color: Color(
+                          0xFF2A6FF5), size: 20),
                       const SizedBox(width: 8),
                       Text(
                         localizations.menuItemsCount(items.length),
@@ -636,7 +637,7 @@ class _MenuPageState extends State<MenuPage1> {
                             borderRadius: BorderRadius.circular(12),
                             border: Border.all(
                               color: item.isSelected
-                                  ? const Color(0xFFFF9800).withOpacity(0.3)
+                                  ? const Color(0xFF0DB6EA).withOpacity(0.3)
                                   : Colors.transparent,
                             ),
                           ),
@@ -651,7 +652,7 @@ class _MenuPageState extends State<MenuPage1> {
                                 ),
                                 child: const Icon(
                                   Icons.fastfood,
-                                  color: Color(0xFFFF9800),
+                                  color: Color(0xFF0DB6EA),
                                   size: 20,
                                 ),
                               ),
@@ -727,7 +728,7 @@ class _MenuPageState extends State<MenuPage1> {
                                 onChanged: (val) {
                                   setState(() => item.isSelected = val!);
                                 },
-                                activeColor: const Color(0xFFFF9800),
+                                activeColor: const Color(0xFF0DB6EA),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4),
                                 ),
@@ -759,7 +760,7 @@ class _MenuPageState extends State<MenuPage1> {
                 child: ElevatedButton(
                   onPressed: _submitMenu,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFFF9800),
+                    backgroundColor: const Color(0xFF0DB6EA),
                     foregroundColor: Colors.white,
                     elevation: 0,
                     padding: const EdgeInsets.symmetric(vertical: 16),
@@ -770,7 +771,10 @@ class _MenuPageState extends State<MenuPage1> {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.shopping_cart, size: 20),
+                      const Icon(Icons.shopping_cart, size: 20,
+                      color: Colors.black,),
+
+
                       const SizedBox(width: 8),
                       Text(
                         localizations.addToMenuWithCount(selectedItemsCount),
@@ -791,7 +795,7 @@ class _MenuPageState extends State<MenuPage1> {
         currentIndex: _selectedIndex,
         onTap: _onNavItemTapped,
         backgroundColor: Colors.white,
-        selectedItemColor: const Color(0xFFFF9800),
+        selectedItemColor: const Color(0xFF0DB6EA),
         unselectedItemColor: Colors.grey,
         type: BottomNavigationBarType.fixed,
         elevation: 8,

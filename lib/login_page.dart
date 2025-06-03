@@ -54,8 +54,8 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
   }
 
   // Modern color palette
-  final Color primaryColor = const Color(0xFF6C63FF);
-  final Color secondaryColor = const Color(0xFF6A5ACD);
+  final Color primaryColor = const Color(0xFF75D3F5);
+  final Color secondaryColor = const Color(0xFF75D3F5);
   final Color accentColor = const Color(0xFFFE9A8B);
   final Color textColor = const Color(0xFF424242);
   final Color backgroundColor = const Color(0xFFF8F9FF);
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
       {TextEditingController? controller}) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(0),
         boxShadow: [
           BoxShadow(
             color: primaryColor.withOpacity(0.1),
@@ -90,13 +90,13 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
               : Icon(Icons.lock_outline, color: primaryColor),
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            // borderRadius: BorderRadius.circular(0),
             borderSide: BorderSide.none,
           ),
           contentPadding:
           const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
@@ -355,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> with SingleTickerProviderStat
                                     foregroundColor: Colors.white,
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
                                   ),
                                   child: const Text(

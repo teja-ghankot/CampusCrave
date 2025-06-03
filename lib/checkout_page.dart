@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'cart_service.dart';
 
 class CheckoutPage extends StatefulWidget {
   final Map<String, int> selectedQuantities;
@@ -44,7 +45,8 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
     // Filter only selected items
     selectedItems = widget.availableItems
-        .where((item) => quantities[item.name]! > 0)
+        .where((item) => (quantities[item.name] ?? 0) > 0)
+
         .toList();
 
     // Calculate initial subtotal
@@ -71,16 +73,21 @@ class _CheckoutPageState extends State<CheckoutPage> {
         0, (sum, item) => sum + (item.price * quantities[item.name]!));
   }
 
-  void updateQuantity(String itemName, int newQuantity) {
+  void updateQuantity(String itemName, int newQuantity) async {
     if (newQuantity <= 0) {
+      await CartService.removeFromCart(itemName);
       // Remove item if quantity is 0
       setState(() {
         quantities[itemName] = 0;
         selectedItems.removeWhere((item) => item.name == itemName);
+
         calculateSubtotal();
       });
     } else {
+      await CartService.removeFromCart(itemName);
+
       setState(() {
+
         quantities[itemName] = newQuantity;
         calculateSubtotal();
       });
@@ -541,7 +548,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     color: Colors.orange[50],
     borderRadius: BorderRadius.circular(50),
     ),
-    child: Icon(Icons.shopping_cart_outlined, size: 60, color: Colors.orange),
+    child: Icon(Icons.shopping_cart_outlined, size: 60, color: Color(0xFF0DB6EA)),
     ),
     SizedBox(height: 24),
     Text(
@@ -564,7 +571,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     ElevatedButton(
     onPressed: () => Navigator.pop(context),
     style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.orange,
+    backgroundColor: Color(0xFF0DB6EA),
     padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
     shape: RoundedRectangleBorder(
     borderRadius: BorderRadius.circular(25),
@@ -604,10 +611,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
     Container(
     padding: EdgeInsets.all(12),
     decoration: BoxDecoration(
-    color: Colors.orange[50],
+    color: Color(0x738CCFE3),
     borderRadius: BorderRadius.circular(12),
     ),
-    child: Icon(Icons.restaurant, color: Colors.orange, size: 24),
+    child: Icon(Icons.restaurant, color: Color(0xFF0DB6EA), size: 24),
     ),
     SizedBox(width: 16),
     Expanded(
@@ -715,10 +722,10 @@ class _CheckoutPageState extends State<CheckoutPage> {
     width: 60,
     height: 60,
     decoration: BoxDecoration(
-    color: Colors.orange[50],
+    color: Color(0x738CCFE3),
     borderRadius: BorderRadius.circular(12),
     ),
-    child: Icon(Icons.fastfood, color: Colors.orange, size: 24),
+    child: Icon(Icons.fastfood, color: Color(0xFF0DB6EA), size: 24),
     ),
     SizedBox(width: 12),
     Expanded(
@@ -873,7 +880,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
     ),
     child: Row(
     children: [
-    Icon(Icons.location_on, color: Colors.green, size: 20),
+    // Icon(Icons.location_on, color: Colors.green, size: 20),
     SizedBox(width: 12),
     Expanded(
     child: Text(
@@ -1142,7 +1149,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
             ElevatedButton(
               onPressed: isProcessing ? null : placeOrder,
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.orange,
+                backgroundColor: Color(0xFF0DB6EA),
                 padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(25),

@@ -271,7 +271,7 @@ class _WalletCoinsPageState extends State<WalletCoinsPage> {
             color: Colors.white,
           ),
         ),
-        backgroundColor: Colors.orange[600],
+        backgroundColor: const Color(0xFF0DB6EA),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
@@ -300,7 +300,7 @@ class _WalletCoinsPageState extends State<WalletCoinsPage> {
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Colors.orange[600]!, Colors.orange[800]!],
+                  colors: [const Color(0xFF78CAE1), const Color(0xFF14C5FB)],
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                 ),
@@ -315,11 +315,13 @@ class _WalletCoinsPageState extends State<WalletCoinsPage> {
               ),
               child: Column(
                 children: [
-                  const Icon(
-                    Icons.account_balance_wallet,
-                    color: Colors.white,
-                    size: 48,
-                  ),
+                  // const Icon(
+                  //   Icons.account_balance_wallet,
+                  //   color: Colors.white,
+                  //   size: 48,
+                  // ),
+                  Image(image:AssetImage('assets/c.png'),height: 70,width: 90,),
+
                   const SizedBox(height: 12),
                   const Text(
                     'Current Balance',
@@ -546,7 +548,7 @@ class CoinPackageCard extends StatelessWidget {
                         ),
                         child: Icon(
                           Icons.monetization_on,
-                          color: Colors.orange[600],
+                          color: const Color(0xFF0DB6EA),
                           size: 28,
                         ),
                       ),
@@ -557,7 +559,7 @@ class CoinPackageCard extends StatelessWidget {
                       Text(
                         '${package.coins}',
                         style: const TextStyle(
-                          fontSize: 24,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black87,
                         ),
@@ -577,7 +579,7 @@ class CoinPackageCard extends StatelessWidget {
                       Text(
                         '₹${package.price}',
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 12,
                           fontWeight: FontWeight.bold,
                           color: Colors.green[600],
                         ),
@@ -588,7 +590,7 @@ class CoinPackageCard extends StatelessWidget {
                         Text(
                           'Save ₹${package.savings}',
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 10,
                             color: Colors.green[600],
                             fontWeight: FontWeight.w500,
                           ),

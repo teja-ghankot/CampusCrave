@@ -23,8 +23,8 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
 
-  final Color primaryColor = const Color(0xFF6C63FF);
-  final Color secondaryColor = const Color(0xFF6A5ACD);
+  final Color primaryColor = const Color(0xFF75D3F5);
+  final Color secondaryColor = const Color(0xFF75D3F5);
   final Color accentColor = const Color(0xFFFE9A8B);
   final Color textColor = const Color(0xFF424242);
   final Color backgroundColor = const Color(0xFFF8F9FF);
@@ -63,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
   Widget _buildTextField(TextEditingController controller, TextInputType type, bool obscure, Widget? suffixIcon, String hintText) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
             color: primaryColor.withOpacity(0.1),
@@ -90,16 +90,16 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
           ),
           suffixIcon: suffixIcon,
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide.none,
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: primaryColor, width: 1.5),
           ),
         ),
@@ -216,7 +216,7 @@ class _SignupScreenState extends State<SignupScreen> with SingleTickerProviderSt
                           const SizedBox(height: 30),
                           Container(
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(30),
+                              borderRadius: BorderRadius.circular(10),
                               boxShadow: [
                                 BoxShadow(
                                   color: secondaryColor.withOpacity(0.3),

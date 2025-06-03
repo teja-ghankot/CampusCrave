@@ -7,6 +7,7 @@ import 'models/menu_item.dart';
 import 'previous_orders.dart';
 import 'wallet.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'cart_service.dart';
 
 class RecommendationItem {
   final String itemId;
@@ -28,6 +29,15 @@ class CamCraveHome extends StatefulWidget {
 }
 
 class _CamCraveHomeState extends State<CamCraveHome> {
+  int cartItemCount = 0;
+  Future<void> _loadCartCount() async {
+    int count = await CartService.getTotalItems();
+    if (mounted) {
+      setState(() {
+        cartItemCount = count;
+      });
+    }
+  }
   List<RecommendationItem> recommendations = [];
   bool isLoadingRecommendations = true;
   String? userId;
@@ -144,13 +154,42 @@ class _CamCraveHomeState extends State<CamCraveHome> {
           backgroundColor: Colors.white,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
-          items: const [
+          items:  [
             BottomNavigationBarItem(
               icon: Icon(Icons.home_rounded, size: 28),
               label: '',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.shopping_cart_rounded, size: 28),
+              icon: Stack(
+                children: [
+                  const Icon(Icons.shopping_cart_rounded, size: 28),
+                  if (cartItemCount > 0)
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '$cartItemCount',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
               label: '',
             ),
             BottomNavigationBarItem(
@@ -158,7 +197,7 @@ class _CamCraveHomeState extends State<CamCraveHome> {
               label: '',
             ),
           ],
-          onTap: (index) {
+          onTap: (index)  async{
             if (index == 2) {
               showModalBottomSheet(
                 context: context,
@@ -230,16 +269,43 @@ class _CamCraveHomeState extends State<CamCraveHome> {
                 ),
               );
             } else if (index == 1) {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CheckoutPage(
-                    selectedQuantities: {},
-                    availableItems: [],
-                    canteenName: "XYZ Canteen",
-                  ),
-                ),
-              );
+              List<CartItem> cartItems = await CartService.getCart();
+              Map<String, int> selectedQuantities = await CartService.getCartQuantities();
+    if (cartItems.isNotEmpty) {
+      // Convert CartItems to MenuItems for CheckoutPage
+      List<MenuItem> availableItems = cartItems.map((cartItem) =>
+          MenuItem(
+            name: cartItem.name,
+            price: cartItem.price,
+            category: cartItem.category,
+            quantity: selectedQuantities[cartItem.name] ?? 0,
+            availability: true,
+          )
+      ).toList();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              CheckoutPage(
+                selectedQuantities: selectedQuantities,
+                availableItems: availableItems,
+                canteenName: "XYZ Canteen",
+              ),
+        ),
+      ).then((_) {
+        // Refresh cart count when returning from checkout
+        _loadCartCount();
+      });
+    }else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Your cart is empty'),
+          backgroundColor: Colors.orange,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        ),
+      );
+    }
             }
           },
         ),
@@ -487,7 +553,7 @@ class _CamCraveHomeState extends State<CamCraveHome> {
                   ),
                 )
                     : Container(
-                  height: 200,
+                  height: 210,
                   child: ListView.separated(
                     scrollDirection: Axis.horizontal,
                     itemCount: recommendations.length,
@@ -599,7 +665,7 @@ class _CamCraveHomeState extends State<CamCraveHome> {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2E7D32),
+                  backgroundColor: const Color(0xFF0DB6EA),
                   foregroundColor: Colors.white,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
@@ -764,6 +830,7 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  int totalCartItems = 0;
   List<MenuItem> availableItems = [];
   List<MenuItem> filteredItems = [];
   Map<String, int> selectedQuantities = {};
@@ -831,9 +898,24 @@ class _MenuPageState extends State<MenuPage> {
     }
   }
 
-  void incrementQuantity(String itemName) {
+  void incrementQuantity(String itemName) async {
+    // Find the item details
+    MenuItem? item = availableItems.firstWhere(
+          (item) => item.name == itemName,
+      orElse: () => MenuItem(
+        name: itemName,
+        price: 0,
+        category: '',
+        availability: true,
+        quantity: 0,  // Add this required parameter
+      ),
+    );
+
+    await CartService.addToCart(item.name, item.price, item.category);
+
     setState(() {
       selectedQuantities[itemName] = (selectedQuantities[itemName] ?? 0) + 1;
+      totalCartItems++;
     });
 
     if (selectedQuantities[itemName] == 1) {
@@ -841,7 +923,7 @@ class _MenuPageState extends State<MenuPage> {
         SnackBar(
           content: Text('Added $itemName to cart'),
           duration: const Duration(seconds: 2),
-          backgroundColor: const Color(0xFF2E7D32),
+          backgroundColor: const Color(0xFF0DB6EA),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         ),
@@ -849,10 +931,13 @@ class _MenuPageState extends State<MenuPage> {
     }
   }
 
-  void decrementQuantity(String itemName) {
+  void decrementQuantity(String itemName) async {
     if (selectedQuantities[itemName]! > 0) {
+      await CartService.removeFromCart(itemName);
+
       setState(() {
         selectedQuantities[itemName] = selectedQuantities[itemName]! - 1;
+        totalCartItems--;
       });
     }
   }
@@ -865,8 +950,19 @@ class _MenuPageState extends State<MenuPage> {
     searchController.addListener(() {
       searchMenu(searchController.text);
     });
+    _loadCart();
   }
+  Future<void> _loadCart() async {
+    Map<String, int> cartQuantities = await CartService.getCartQuantities();
+    int totalItems = await CartService.getTotalItems();
 
+    if (mounted) {
+      setState(() {
+        selectedQuantities = cartQuantities;
+        totalCartItems = totalItems;
+      });
+    }
+  }
   void initializeSocket() {
     socket = IO.io('https://campcrave-backend.onrender.com', <String, dynamic>{
       'transports': ['websocket'],
@@ -903,13 +999,13 @@ class _MenuPageState extends State<MenuPage> {
   Widget build(BuildContext context) {
     int totalItems = selectedQuantities.values.fold(0, (sum, qty) => sum + qty);
     double totalPrice = availableItems
-        .where((item) => selectedQuantities[item.name]! > 0)
+        .where((item) => (selectedQuantities[item.name] ?? 0) > 0)
         .fold(0, (sum, item) => sum + (item.price * (selectedQuantities[item.name] ?? 0)));
 
     return Scaffold(
       backgroundColor: const Color(0xFFFAFAFA),
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xFF0DB6EA),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
@@ -932,26 +1028,41 @@ class _MenuPageState extends State<MenuPage> {
             children: [
               IconButton(
                 icon: const Icon(Icons.shopping_cart_rounded, color: Colors.black),
-                onPressed: () {
+                onPressed: () async {
                   // Navigate to cart
+                  List<CartItem> cartItems = await CartService.getCart();
+                  if (cartItems.isNotEmpty) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CheckoutPage(
+                          selectedQuantities: selectedQuantities,
+                          availableItems: availableItems,
+                          canteenName: widget.canteenName,
+                        ),
+                      ),
+                    ).then((_) {
+                      _loadCart(); // Refresh cart when returning
+                    });
+                  }
                 },
               ),
-              if (totalItems > 0)
+              if (totalCartItems > 0)
                 Positioned(
                   right: 8,
                   top: 8,
                   child: Container(
                     padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF2E7D32),
+                      color: const Color(0xFFFF2E3F),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     constraints: const BoxConstraints(
                       minWidth: 16,
-                      minHeight: 16,
+                       minHeight: 16,
                     ),
                     child: Text(
-                      '$totalItems',
+                      '$totalCartItems',
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 10,
@@ -1002,7 +1113,8 @@ class _MenuPageState extends State<MenuPage> {
           // Menu Items
           Expanded(
             child: isLoading
-                ? const Center(child: CircularProgressIndicator(color: Color(0xFF2E7D32)))
+                ? const Center(child: CircularProgressIndicator(color: Color(
+                0xFF0DB6EA)))
                 : errorMessage.isNotEmpty && filteredItems.isEmpty
                 ? Center(child: Text(errorMessage))
                 : filteredItems.isEmpty
@@ -1073,7 +1185,7 @@ class _MenuPageState extends State<MenuPage> {
                                 style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.bold,
-                                  color: Color(0xFF2E7D32),
+                                  color: Color(0xFF0DB6EA),
                                 ),
                               ),
                             ],
@@ -1084,7 +1196,7 @@ class _MenuPageState extends State<MenuPage> {
                         quantity > 0
                             ? Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xFF2E7D32),
+                            color: const Color(0xFF0DB6EA),
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Row(
@@ -1117,7 +1229,7 @@ class _MenuPageState extends State<MenuPage> {
                             : ElevatedButton(
                           onPressed: () => incrementQuantity(item.name),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF2E7D32),
+                            backgroundColor: const Color(0xFF0DB6EA),
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25),

@@ -410,7 +410,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
                   Text(
                     order.customerName,
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 13,
                       fontWeight: FontWeight.w500,
                       color: Colors.grey.shade800,
                     ),
@@ -499,7 +499,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
                   Container(
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Color(0xFFFF8A00), Color(0xFFFF6B00)],
+                        colors: [Color(0xFF0DB6EA), Color(0xFFFF6B00)],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
                       ),
@@ -560,7 +560,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
     if (isLoading) {
       return const Center(
         child: CircularProgressIndicator(
-          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFF8A00)),
+          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF0DB6EA)),
         ),
       );
     }
@@ -628,10 +628,8 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black87),
-          onPressed: () => Navigator.pop(context),
-        ),
+        //
+
         title: Text(
           l10n.orders,
           style: const TextStyle(
@@ -703,9 +701,9 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
                   ),
                 ),
               ],
-              labelColor: const Color(0xFFFF8A00),
+              labelColor: const Color(0xFF0DB6EA),
               unselectedLabelColor: Colors.black54,
-              indicatorColor: const Color(0xFFFF8A00),
+              indicatorColor: const Color(0xFF0DB6EA),
               indicatorWeight: 3,
               indicatorSize: TabBarIndicatorSize.label,
             ),
@@ -735,7 +733,7 @@ class _OrdersPageState extends State<OrdersPage> with SingleTickerProviderStateM
           currentIndex: _selectedIndex,
           onTap: _onNavItemTapped,
           backgroundColor: Colors.white,
-          selectedItemColor: const Color(0xFFFF8A00),
+          selectedItemColor: const Color(0xFF0DB6EA),
           unselectedItemColor: Colors.grey.shade600,
           type: BottomNavigationBarType.fixed,
           elevation: 0,

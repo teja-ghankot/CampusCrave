@@ -98,6 +98,7 @@ class _MyAppState extends State<MyApp> {
           primary: const Color(0xFF6C63FF),
           secondary: const Color(0xFF6A5ACD),
         ),
+        fontFamily: 'Poppins',
       ),
       initialRoute: '/',
       onGenerateRoute: (RouteSettings settings) {
